@@ -41,5 +41,9 @@
             margin-bottom: 20px;
         }
     }
+}
 
+.image_blur {
+    transition: 1s;
+    filter: brightness(10%);
 }
