@@ -8,7 +8,7 @@ export default class  PortfolioForm extends Component {
         this.state = {
             name: "",
             description: "",
-            category: "",
+            category: "eCommerce",
             position: "",
             url: "",
             thumb_image: "",
@@ -43,8 +43,9 @@ export default class  PortfolioForm extends Component {
         axios.post("https://tarrancerichardson.devcamp.space/portfolio/portfolio_items",
             this.buildForm(), {withCredentials: true} 
         ).then(response => {
-            console.log("response", response);
-        }).catch(error => {
+            this.props.handleSuccessFormSubmission(response.data.portfolio_item);
+        })
+        .catch(error => {
             console.log("portfolio form handleSubmit error", error);
         })
 
