@@ -22,24 +22,31 @@ export default class  PortfolioForm extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.componentConfig = this.componentConfig.bind(this);
-        this.djsConfig = this.djsConfig.bind(this)
+        this.djsConfig = this.djsConfig.bind(this);
+        this.handleThumbDrop = this.handleThumbDrop.bind(this);
     }
 
+
+    handleThumbDrop() {
+        return {
+            addedfile: file => this.setState({thumb_image: file })
+        }
+    }
 
     componentConfig() {
         return {
            iconFiletypes: [".jpg", ".png"],
            showFiletypeIcon: true,
            postUrl: "https://httpbin.org/post" 
-        }
+        };
     }
 
     djsConfig() {
         return {
-            addRemoveLinks: true,
-            maxFiles: 1
-        }
-    }
+          addRemoveLinks: true,
+          maxFiles: 1
+        };
+      }
 
     buildForm() {
         let formData = new FormData ();
@@ -49,7 +56,10 @@ export default class  PortfolioForm extends Component {
         formData.append("portfolio_item[url]", this.state.url); 
         formData.append("portfolio_item[category]", this.state.category); 
         formData.append("portfolio_item[position]", this.state.position); 
-
+        
+        if (this.state.thumb_image) {
+            formData.append("portfolio_item[thumb_image]", this.state.thumb_image); 
+        }    
 
         return formData;
     }
@@ -132,6 +142,7 @@ export default class  PortfolioForm extends Component {
                         <DropzoneComponent
                             config={this.componentConfig()}
                             djsConfig={this.djsConfig}
+                            eventHandlers={this.handleThumbDrop()}
                         />
                               
                     </div> 
