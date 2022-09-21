@@ -5,8 +5,8 @@ import DropzoneComponent from "react-dropzone-component";
 import "../../../node_modules/react-dropzone-component/styles/filepicker.css";
 import "../../../node_modules/dropzone/dist/min/dropzone.min.css";
 
-export default class  PortfolioForm extends Component {
-    constructor (props) {
+export default class PortfolioForm extends Component {
+    constructor(props) {
         super(props);
 
         this.state = {
@@ -18,7 +18,7 @@ export default class  PortfolioForm extends Component {
             thumb_image: "",
             banner_image: "",
             logo: ""
-        }
+        };
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -108,7 +108,7 @@ export default class  PortfolioForm extends Component {
         ).then(response => {
             this.props.handleSuccessFormSubmission(response.data.portfolio_item);
             
-            this.setState = ({
+            this.setState ({
                 name: "",
                 description: "",
                 category: "eCommerce",
@@ -183,29 +183,38 @@ export default class  PortfolioForm extends Component {
                         />
                     </div> 
 
-                    <div className="image-uploaders three-column">
+                    <div className="image-uploaders">
                         <DropzoneComponent
                             ref={this.thumbRef}
                             config={this.componentConfig()}
                             djsConfig={this.djsConfig}
                             eventHandlers={this.handleThumbDrop()}
-                        />
+                        >
+                            <div className="dz-message">Thumbnail</div>
+                        </DropzoneComponent>
+
                         <DropzoneComponent
                             ref={this.bannerRef}
                             config={this.componentConfig()}
                             djsConfig={this.djsConfig}
                             eventHandlers={this.handleBannerDrop()}
-                        />  
+                        >
+                            <div className="dz-message">Banner</div>
+                        </DropzoneComponent>    
+
                         <DropzoneComponent
                             ref={this.logoRef}
                             config={this.componentConfig()}
                             djsConfig={this.djsConfig}
                             eventHandlers={this.handleLogoDrop()}
-                        />    
+                        >
+                            <div className="dz-message">Logo</div>
+                        </DropzoneComponent>   
+
                     </div> 
 
                     <div>
-                        <button type="submit">save</button>
+                        <button className='btn' type="submit">save</button>
                     </div>      
                 </form>
         );
