@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import BlogItem from "../blog/blog-item";
 
@@ -11,6 +12,7 @@ class Blog extends Component {
       blogItems: [],
       totalCount: 0,
       currentPage: 0,
+      isLoading: true,
     };
 
     this.getBlogItems = this.getBlogItems.bind(this);
@@ -20,10 +22,17 @@ class Blog extends Component {
   activateInfiniteScroll() {
     window.onscroll = () => {
       if (
+        this.state.isLoading ||
+        this.state.blogItems.length === this.state.totalCount
+      ) {
+        return;
+      }
+
+      if (
         window.innerHeight + document.documentElement.scrollTop + 1 >
         document.documentElement.offsetHeight
       ) {
-        console.log("get more posts");
+        this.getBlogItems();
       }
     };
   }
@@ -35,13 +44,15 @@ class Blog extends Component {
 
     axios
       .get(
-        "https://tarrancerichardson.devcamp.space/portfolio/portfolio_blogs",
+        `https://tarrancerichardson.devcamp.space/portfolio/portfolio_blogs?page=${this.state.currentPage}`,
         { withCredentials: true }
       )
       .then((response) => {
+        console.log("getting", response.data);
         this.setState({
-          blogItems: response.data.portfolio_blogs,
+          blogItems: this.state.blogItems.concat(response.data.portfolio_blogs),
           totalCount: response.data.meta.total_records,
+          isLoading: false,
         });
       })
       .catch((error) => {
@@ -61,6 +72,12 @@ class Blog extends Component {
     return (
       <div className="blog_container">
         <div className="content_container">{blogRecords}</div>
+
+        {this.state.isLoading ? (
+          <div className="content-loader">
+            <FontAwesomeIcon icon="gear" spin></FontAwesomeIcon>
+          </div>
+        ) : null}
       </div>
     );
   }
