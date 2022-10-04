@@ -4,13 +4,9 @@ import axios from "axios";
 export default class PortfolioDetail extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      portfolioItem: {},
-    };
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.getPorfolioItem();
   }
 
