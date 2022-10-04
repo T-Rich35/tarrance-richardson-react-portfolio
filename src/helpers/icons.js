@@ -4,6 +4,9 @@ import {
   faPenToSquare,
   faGear,
   faCirclePlus,
+  faPhone,
+  faEnvelope,
+  faMapLocation,
 } from "@fortawesome/free-solid-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
 
@@ -13,7 +16,10 @@ const Icons = () => {
     faSignOutAlt,
     faPenToSquare,
     faGear,
-    faCirclePlus
+    faCirclePlus,
+    faPhone,
+    faEnvelope,
+    faMapLocation
   );
 };
 
